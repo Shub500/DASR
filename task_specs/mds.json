@@ -1,0 +1,30 @@
+{
+  "schema_version": "dasr-task-v1",
+  "task_key": "mds",
+  "paper_name": "MDS",
+  "task_name": "mdsr__icu24__lac_inr_alb_t2",
+  "target_description": "ICU admission within 24 hours of emergency-department arrival",
+  "data": {
+    "path": "data/mds_all_encounters.parquet",
+    "format": "parquet",
+    "target_col": "icu24",
+    "row_id_col": "general_study_id",
+    "group_id_col": "general_subject_id",
+    "audit_order_col": "general_intime",
+    "invalid_target_values": [-999, -999.0]
+  },
+  "split": {
+    "strategy": "deterministic_stratified_group",
+    "deduplicate_one_row_per_group": false,
+    "audit_one_row_per_group": true,
+    "expected_sizes": {"model_train": 51408, "mdp_build": 25704, "post_cal": 14134, "report_test": 14205}
+  },
+  "features": {
+    "T0": ["demographics_gender", "demographics_age", "general_race", "demographics_ethnicity_asian", "demographics_ethnicity_black/african", "demographics_ethnicity_hispanic/latino", "demographics_ethnicity_other", "demographics_ethnicity_white", "biometrics_bmi", "biometrics_weight", "biometrics_height", "vitals_acuity"],
+    "T1": ["vitals_temperature_first", "vitals_temperature_last", "vitals_heartrate_first", "vitals_heartrate_last", "vitals_resprate_first", "vitals_resprate_last", "vitals_o2sat_first", "vitals_o2sat_last", "vitals_sbp_first", "vitals_sbp_last", "vitals_dbp_first", "vitals_dbp_last"],
+    "T2": ["labvalues_creatinine_first", "labvalues_creatinine_last", "labvalues_urea_nitrogen_first", "labvalues_sodium_first", "labvalues_potassium_first", "labvalues_glucose_first", "labvalues_hemoglobin_first", "labvalues_white_blood_cells_first", "labvalues_platelet_count_first", "labvalues_bicarbonate_first", "labvalues_lactate_first", "labvalues_inr(pt)_first", "labvalues_albumin_first"],
+    "T3": ["labvalues_troponin_t_first", "labvalues_c-reactive_protein_first", "labvalues_bilirubin,_total_first", "labvalues_alanine_aminotransferase_(alt)_first", "labvalues_asparate_aminotransferase_(ast)_first"]
+  },
+  "expected": {"rows": 105451, "subjects": 70815, "prevalence": 0.12270153910346986, "cumulative_feature_counts": {"T0": 12, "T1": 24, "T2": 37, "T3": 42}}
+}
+

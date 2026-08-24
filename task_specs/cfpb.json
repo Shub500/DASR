@@ -1,0 +1,30 @@
+{
+  "schema_version": "dasr-task-v1",
+  "task_key": "cfpb",
+  "paper_name": "CFPB",
+  "task_name": "cfpb_hidden_relief_response",
+  "target_description": "non-public monetary relief response",
+  "data": {
+    "path": "data/cfpb_hidden_escalation.csv",
+    "format": "csv",
+    "target_col": "target_relief_response",
+    "row_id_col": "complaint_id",
+    "group_id_col": null,
+    "audit_order_col": null,
+    "invalid_target_values": []
+  },
+  "split": {
+    "strategy": "deterministic_stratified_row",
+    "deduplicate_one_row_per_group": false,
+    "audit_one_row_per_group": false,
+    "expected_sizes": {"model_train": 34855, "mdp_build": 17427, "post_cal": 17427, "report_test": 17430}
+  },
+  "features": {
+    "T0": ["received_year", "tag_older", "tag_servicemember", "received_is_weekend"],
+    "T1": ["narrative_chars_log", "narrative_words_log", "narrative_money_terms", "narrative_hardship_terms", "narrative_credit_terms"],
+    "T2": ["company_prior_target_monetary_relief_rate", "company_prior_count_log", "company_prior_target_public_response_rate"],
+    "T3": ["product_issue_prior_target_monetary_relief_rate", "product_issue_prior_target_untimely_rate"]
+  },
+  "expected": {"rows": 87139, "prevalence": 0.4937169350118776, "cumulative_feature_counts": {"T0": 4, "T1": 9, "T2": 12, "T3": 14}}
+}
+

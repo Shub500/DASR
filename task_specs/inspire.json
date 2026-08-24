@@ -1,0 +1,30 @@
+{
+  "schema_version": "dasr-task-v1",
+  "task_key": "inspire",
+  "paper_name": "INSPIRE",
+  "task_name": "inspire_prolonged_postop_los_p90",
+  "target_description": "postoperative length of stay above the 90th percentile",
+  "data": {
+    "path": "data/inspire_perioperative_candidate_cohort.csv",
+    "format": "csv",
+    "target_col": "target_prolonged_postop_los_p90",
+    "row_id_col": "row_id",
+    "group_id_col": "subject_id",
+    "audit_order_col": "opstart_time",
+    "invalid_target_values": []
+  },
+  "split": {
+    "strategy": "deterministic_group_hash",
+    "deduplicate_one_row_per_group": true,
+    "group_row_selection": "earliest_numeric_then_row_id",
+    "audit_one_row_per_group": true,
+    "expected_sizes": {"model_train": 79888, "mdp_build": 39667, "post_cal": 39902, "report_test": 40074}
+  },
+  "features": {
+    "T0": ["age", "height", "weight", "bmi", "sex_f", "sex_m", "group_elderly"],
+    "T1": ["asa", "emop", "preop_los_min", "group_asa_high", "group_emergency", "group_high_risk_department", "group_clinical_high_risk", "department_an", "department_cts", "department_dm", "department_em", "department_gs", "department_im", "department_ns", "department_og", "department_os", "department_ped", "antype_general", "antype_mac", "antype_neuraxial", "antype_regional"],
+    "T2": ["dx_chapter_a", "dx_chapter_b", "dx_chapter_c", "dx_chapter_d", "dx_chapter_e", "dx_chapter_g", "dx_chapter_h", "dx_chapter_i", "dx_chapter_j", "dx_chapter_k", "dx_chapter_l", "dx_chapter_m", "dx_chapter_o", "dx_chapter_r", "dx_chapter_s", "dx_chapter_t", "dx_chapter_u", "dx_chapter_v", "dx_chapter_w", "dx_chapter_y", "dx_chapter_x", "dx_chapter_z", "pcs_section_0", "pcs_section_1", "pcs_system_05", "pcs_system_0b", "pcs_system_0d", "pcs_system_0s"],
+    "T3": ["op_duration_min", "ane_duration_min", "or_duration_min", "cpb_any", "cpb_duration_min", "intraop_hr_min", "intraop_hr_mean", "intraop_art_sbp_min", "intraop_nibp_sbp_min", "intraop_spo2_min", "intraop_ebl_sum", "intraop_uo_sum"]
+  },
+  "expected": {"candidate_operations": 261324, "subjects": 199531, "rows": 199531, "prevalence": 0.08312492795605696, "cumulative_feature_counts": {"T0": 7, "T1": 28, "T2": 56, "T3": 68}}
+}

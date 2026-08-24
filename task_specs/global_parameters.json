@@ -1,0 +1,83 @@
+{
+  "schema_version": "dasr-global-v1",
+  "random_seed": 31,
+  "split_roles": ["model_train", "mdp_build", "post_cal", "report_test"],
+  "split_fractions": {
+    "model_train": 0.4,
+    "mdp_build": 0.2,
+    "post_cal": 0.2,
+    "report_test": 0.2
+  },
+  "cascade": {
+    "learning_rate": 0.05,
+    "n_estimators": 90,
+    "num_leaves": 31,
+    "min_child_samples": 30,
+    "leaf_prefix_depths": [2],
+    "n_jobs": 1
+  },
+  "calibration": {
+    "method": "isotonic",
+    "fit_split": "mdp_build",
+    "public_score_bins": 10
+  },
+  "terminal_reference": {
+    "fit_split": "mdp_build",
+    "false_negative_cap": 0.12,
+    "construction_reserve": 0.85
+  },
+  "audit": {
+    "tail_mass": 0.2,
+    "selection_cap": 0.045,
+    "report_cap": 0.05,
+    "total_slice_error": 0.1,
+    "score_bins_per_tier": 10,
+    "slice_count": 40
+  },
+  "structure": {
+    "policy_classes": ["score_anchor", "path_free", "path_bearing"],
+    "support_min_n": 80,
+    "support_min_positive_n": 5,
+    "residual_min_n": 80,
+    "residual_min_positive_n": 5,
+    "max_children_per_parent": 3,
+    "max_total_admissions_per_class": 24,
+    "max_sequential_rounds": 5,
+    "exact_probe_budget_per_step": 24,
+    "exact_objective_tolerance": 1e-10,
+    "min_fixed_dual_gain": 1e-8,
+    "risk_shrinkage": {
+      "enabled": true,
+      "one_sided": "up",
+      "leave_child_out_parent": true,
+      "tau": 400.0,
+      "tau_min": 80.0,
+      "tau_max": 1600.0,
+      "tau_mode": "adaptive_variance"
+    }
+  },
+  "solver": {
+    "method": "highs",
+    "cvar_eta_grid_size": 5,
+    "feasibility_tolerance": 1e-8
+  },
+  "evidence_schedules": [
+    {
+      "id": "linear",
+      "cumulative_costs": {"T0": 0.0, "T1": 3.7, "T2": 7.4, "T3": 11.1}
+    },
+    {
+      "id": "exponential_1p333",
+      "cumulative_costs": {"T0": 0.0, "T1": 2.7, "T2": 6.3, "T3": 11.1}
+    },
+    {
+      "id": "exponential_1p5",
+      "cumulative_costs": {"T0": 0.0, "T1": 2.336842, "T2": 5.842105, "T3": 11.1}
+    }
+  ],
+  "action_profiles": [
+    {"id": "balanced", "false_positive_price": 35.0, "review_price": 14.0},
+    {"id": "fp_strict", "false_positive_price": 56.0, "review_price": 14.0},
+    {"id": "higher_downstream_action_cost", "false_positive_price": 45.0, "review_price": 18.0}
+  ]
+}
